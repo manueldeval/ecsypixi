@@ -1,0 +1,22 @@
+{
+    "meta": {
+        "image": "PeopleSpriteSheet.png"
+    },
+    "frames": {
+        "perso1_front_1": { "frame": {"x":0,  "y":0, "w":32, "h":32} },
+        "perso1_front_2": { "frame": {"x":32, "y":0, "w":32, "h":32} },
+        "perso1_front_3": { "frame": {"x":64, "y":0, "w":32, "h":32} },
+
+        "perso1_left_1": { "frame": {"x":0,  "y":32, "w":32, "h":32} },
+        "perso1_left_2": { "frame": {"x":32, "y":32, "w":32, "h":32} },
+        "perso1_left_3": { "frame": {"x":64, "y":32, "w":32, "h":32} },
+
+        "perso1_right_1": { "frame": {"x":0,  "y":64, "w":32, "h":32} },
+        "perso1_right_2": { "frame": {"x":32, "y":64, "w":32, "h":32} },
+        "perso1_right_3": { "frame": {"x":64, "y":64, "w":32, "h":32} },
+
+        "perso1_back_1": { "frame": {"x":0,  "y":96, "w":32, "h":32} },
+        "perso1_back_2": { "frame": {"x":32, "y":96, "w":32, "h":32} },
+        "perso1_back_3": { "frame": {"x":64, "y":96, "w":32, "h":32} }
+    }
+}

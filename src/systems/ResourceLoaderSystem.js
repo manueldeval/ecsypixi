@@ -1,4 +1,4 @@
-import { System, Not } from "ecsy"
+import { System } from "ecsy"
 import { Resource } from '../components/Resource'
 import { Engine } from '../components/Engine'
 import { ResourceLoaderSSC } from "../components/ResourceLoaderSSC";

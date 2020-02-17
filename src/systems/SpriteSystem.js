@@ -1,8 +1,8 @@
 import { Sprite as PixiSprite } from "pixi.js"
-import { System, Not, Entity } from "ecsy"
+import { System, Not } from "ecsy"
 import { Engine } from '../components/Engine'
 import { Sprite } from '../components/Sprite'
-import { SpriteSSC } from '../components/SpriteSSC'
+import { DisplayObjectSSC } from '../components/DisplayObjectSSC'
 
 class SpriteSystem extends System {
     constructor(world,attributes){
@@ -12,26 +12,34 @@ class SpriteSystem extends System {
 
     execute(delta, time) {
         let app = this.queries.engine.results[0].getComponent(Engine).app;
+        // The sprite was added
         this.queries.spritesToAdd.results.forEach(entity => {
             console.log("Sprite created!")
             let spriteName = entity.getComponent(Sprite).name
             let sprite = PixiSprite.from(spriteName)
             sprite.visible = false
             app.stage.addChild(sprite)
-            entity.addComponent(SpriteSSC,{sprite})
+            entity.addComponent(DisplayObjectSSC,{object: sprite})
         })
-        this.queries.spritesToRemove.results.forEach(entity => {
-            let sprite = entity.getComponent(SpriteSSC).sprite
-            app.stage.removeChild(sprite)
+        // The sprite was renamed
+        this.queries.spriteNameChanged.changed.forEach(entity => {
+            let displayObject = entity.getMutableComponent(DisplayObjectSSC)
+            app.stage.removeChild(displayObject.object)
+            
+            let spriteName = entity.getComponent(Sprite).name
+            let newSprite = PixiSprite.from(spriteName)
+            newSprite.visible = false
+            app.stage.addChild(newSprite)
+            displayObject.object = newSprite
         })
     }
 }
 
 SpriteSystem.queries = {
     engine:             { components: [Engine] },
-    spritesToAdd:       { components: [Sprite, Not(SpriteSSC)]},
-    spritesToRemove:    { components: [Not(Sprite), SpriteSSC]},
-    // spriteNameChanged:  { components: [Sprite], changed: true }
+    spritesToAdd:       { components: [Sprite, Not(DisplayObjectSSC)]},
+    spritesToRemove:    { components: [Not(Sprite), DisplayObjectSSC]},
+    spriteNameChanged:  { components: [Sprite , DisplayObjectSSC], listen: { changed: [Sprite] }}
 }
 
 export { SpriteSystem }

@@ -1,3 +1,4 @@
+
 export function gameLoop(world){
   function run() {
     // Compute delta and elapsed time
@@ -11,3 +12,4 @@ export function gameLoop(world){
   var lastTime = performance.now();
   run();
 }
+

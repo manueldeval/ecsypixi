@@ -72,7 +72,7 @@ world.createEntity("Logo")
 // .addComponent(Velocity,{x:1.0,y:1.0})
 // .addComponent(Visible)
 
-for (var i=0;i<100;i++){
+for (var i=0;i<1000;i++){
   let speed = 200;
   world.createEntity()
   .addComponent(Clip,{ frames: [{ name: 'perso1_front_2', duration: speed },

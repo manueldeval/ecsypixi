@@ -14,7 +14,7 @@ class RenderSystem extends System {
         let app = this.queries.engine.results[0].getComponent(Engine).app;
 
         this.queries.visibleObjects.results.forEach(entity => {
-            let object = entity.getComponent(DisplayObjectSSC).object
+            let object = entity.getMutableComponent(DisplayObjectSSC).object
             let position = entity.getComponent(Position)
 
             object.visible = true

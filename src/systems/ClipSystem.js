@@ -18,7 +18,6 @@ class ClipSystem extends System {
 
         this.queries.clipsWithSprite.results.forEach(entity => {
             let clip = entity.getMutableComponent(Clip);
-            
             if (time > clip.nextAt){
                 let sprite = entity.getMutableComponent(Sprite);
                 clip.currentIndex = (clip.currentIndex + 1) % clip.frames.length;

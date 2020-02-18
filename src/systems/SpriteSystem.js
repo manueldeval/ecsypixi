@@ -23,14 +23,25 @@ class SpriteSystem extends System {
         // The sprite was renamed
         this.queries.spriteNameChanged.changed.forEach(entity => {
             let displayObject = entity.getMutableComponent(DisplayObjectSSC)
-            app.stage.removeChild(displayObject.object)
-            
-            let spriteName = entity.getComponent(Sprite).name
-            let newSprite = PixiSprite.from(spriteName)
-            newSprite.visible = false
-            app.stage.addChild(newSprite)
-            displayObject.object = newSprite
+            let spriteName = entity.getComponent(Sprite).name    
+            let texture = this.findTexture(app.loader,spriteName)
+            displayObject.object.texture = texture
         })
+    }
+    findTexture(loader,spriteName) {
+        if (loader.resources[spriteName]){
+            return loader.resources[spriteName].texture
+        } else {
+            let s = Object.keys(loader.resources)
+                .map(key => loader.resources[key])
+                .filter(o => o.textures)
+                .find(o => o.textures[spriteName])
+            if (s) {
+                return s.textures[spriteName]
+            } else {
+                throw new Error("Unable to find sprite "+spriteName)
+            }
+        }
     }
 }
 

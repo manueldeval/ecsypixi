@@ -14,7 +14,6 @@ class SpriteSystem extends System {
         let app = this.queries.engine.results[0].getComponent(Engine).app;
         // The sprite was added
         this.queries.spritesToAdd.results.forEach(entity => {
-            console.log("Sprite created!")
             let spriteName = entity.getComponent(Sprite).name
             let sprite = PixiSprite.from(spriteName)
             sprite.visible = false

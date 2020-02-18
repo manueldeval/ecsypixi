@@ -1,4 +1,4 @@
-import { World } from "ecsy";
+import { World ,System } from "ecsy";
 
 import { gameLoop } from './utils/game'
 
@@ -10,6 +10,7 @@ import { KinematicSystem} from './systems/KinematicSystem'
 import { TextSystem } from './systems/TextSystem'
 import { DisplayObjectCleanerSystem } from './systems/DisplayObjectCleanerSystem'
 import { FpsSystem } from './systems/FpsSystem'
+import { ClipSystem } from './systems/ClipSystem'
 
 import { Resource } from './components/Resource'
 import { Engine } from './components/Engine'
@@ -19,6 +20,7 @@ import { Position } from './components/Position'
 import { Velocity } from './components/Velocity'
 import { Text } from './components/Text'
 import { Fps } from './components/Fps'
+import { Clip } from './components/Clip'  
 
 let world = new World();
 
@@ -27,6 +29,7 @@ world
   .registerSystem(EngineSystem)         // Initialize the engine
   .registerSystem(ResourceLoaderSystem) // Block all systems with lower priority while resources are not loaded.
   .registerSystem(KinematicSystem)      // Compute the positions based on velocity
+  .registerSystem(ClipSystem)
   .registerSystem(SpriteSystem)         // Create the sprite
   .registerSystem(TextSystem)           // Render text
   .registerSystem(FpsSystem)            // Fps
@@ -59,11 +62,28 @@ world.createEntity("Logo")
   })
 
 // Sprite
-world.createEntity()
-  .addComponent(Sprite,{ name: 'perso1_front_2' })
-  .addComponent(Position,{x:10,y:10})
-  .addComponent(Velocity,{x:1.0,y:1.0})
+// world.createEntity()
+// .addComponent(Clip,{ frames: [{ name: 'perso1_front_2', duration: 200 },
+//                               { name: 'perso1_front_1', duration: 200 },
+//                               { name: 'perso1_front_2', duration: 200 },
+//                               { name: 'perso1_front_3', duration: 200 }
+//                     ]})
+// .addComponent(Position,{x:10,y:10})
+// .addComponent(Velocity,{x:1.0,y:1.0})
+// .addComponent(Visible)
+
+for (var i=0;i<100;i++){
+  let speed = 200;
+  world.createEntity()
+  .addComponent(Clip,{ frames: [{ name: 'perso1_front_2', duration: speed },
+                                { name: 'perso1_front_1', duration: speed },
+                                { name: 'perso1_front_2', duration: speed },
+                                { name: 'perso1_front_3', duration: speed }
+                              ]})  
+  .addComponent(Position,{x:300*Math.random()+250,y:300*Math.random()+250})
+  .addComponent(Velocity,{x:5-10.0*Math.random(),y:5.0-10*Math.random()})
   .addComponent(Visible)
+}
 
 // Text
 world.createEntity()
@@ -78,3 +98,4 @@ world.createEntity()
 // Run!
 
 gameLoop(world);
+

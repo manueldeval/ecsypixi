@@ -12,6 +12,7 @@ class EngineSystem extends System {
         let engine = this.queries.engine.results[0].getMutableComponent(Engine);
         if (engine.app == null){
             engine.app = new Application(engine.config)
+            engine.app.stage.sortableChildren = true
             engine.elem.appendChild(engine.app.view)
         }
     }

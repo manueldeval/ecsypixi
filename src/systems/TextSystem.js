@@ -25,18 +25,9 @@ class TextSystem extends System {
         })
         // The sprite was renamed
         this.queries.textChanged.changed.forEach(entity => {
-            let displayObject = entity.getMutableComponent(DisplayObjectSSC)
-
-            app.stage.removeChild(displayObject.object)
-            
+            let displayObject = entity.getMutableComponent(DisplayObjectSSC).object
             let text = entity.getComponent(Text).text
-            let options = entity.getComponent(Text).options
-
-            let newTextObject = new PixiText(text,options)
-
-            displayObject.object = newTextObject
-            app.stage.addChild(displayObject.object)
-
+            displayObject.text = text
         })
     }
 }
@@ -44,7 +35,6 @@ class TextSystem extends System {
 TextSystem.queries = {
     engine:         { components: [Engine] },
     textToAdd:      { components: [Text, Not(DisplayObjectSSC)]},
-    textToRemove:   { components: [Not(Text), DisplayObjectSSC]},
     textChanged:    { components: [Text , DisplayObjectSSC], listen: { changed: [Text] }}
 }
 

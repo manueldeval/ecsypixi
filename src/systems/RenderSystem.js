@@ -13,28 +13,48 @@ class RenderSystem extends System {
     execute(delta, time) {
         let app = this.queries.engine.results[0].getComponent(Engine).app;
 
-        this.queries.visibleObjects.results.forEach(entity => {
+        this.queries.visibility.added.forEach(entity => {
+            let object = entity.getMutableComponent(DisplayObjectSSC).object
+            object.visible = true
+        })
+        this.queries.visibility.removed.forEach(entity => {
+            let object = entity.getMutableComponent(DisplayObjectSSC).object
+            object.visible = false
+        })
+        this.queries.position.changed.forEach(entity => {
             let object = entity.getMutableComponent(DisplayObjectSSC).object
             let position = entity.getComponent(Position)
-
-            object.visible = true
             object.x = position.x
             object.y = position.y
-            
-        });
-        this.queries.hiddenObjects.results.forEach(entity => {
-            let object = entity.getComponent(DisplayObjectSSC).object
-            object.visible = false
-        });
-
-        app.renderer.render(app.stage);
+            object.zIndex = position.z
+        })
+        this.queries.position.added.forEach(entity => {
+            let object = entity.getMutableComponent(DisplayObjectSSC).object
+            let position = entity.getComponent(Position)
+            object.x = position.x
+            object.y = position.y
+            object.zIndex = position.z
+        })
+        // app.renderer.render(app.stage);
     }
 }
 
 RenderSystem.queries = {
-    engine:         { components: [Engine] },
-    visibleObjects: { components: [ Visible,        DisplayObjectSSC, Position ] },
-    hiddenObjects:  { components: [ Not(Visible),   DisplayObjectSSC, Position ] }
+    engine:             { components: [Engine] },
+    visibility:  { 
+        components: [ DisplayObjectSSC, Visible ], 
+        listen: { 
+            added: [ Visible ],
+            removed: [ Visible ]
+        }
+    },
+    position: {
+        components: [ Visible, DisplayObjectSSC, Position ],
+        listen: {
+            changed: [ Position ],
+            added: [ Position ]
+        }
+    }
 }
 
 export { RenderSystem }

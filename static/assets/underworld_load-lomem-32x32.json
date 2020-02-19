@@ -1,0 +1,8 @@
+{
+    "meta": {
+        "image": "underworld_load-lomem-32x32.png"
+    },
+    "frames": {
+        "underworld_floor_medium_lg": { "frame": {"x":0, "y":224, "w":32, "h":32} }
+    }
+}

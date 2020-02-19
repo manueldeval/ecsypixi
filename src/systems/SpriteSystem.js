@@ -48,7 +48,6 @@ class SpriteSystem extends System {
 SpriteSystem.queries = {
     engine:             { components: [Engine] },
     spritesToAdd:       { components: [Sprite, Not(DisplayObjectSSC)]},
-    spritesToRemove:    { components: [Not(Sprite), DisplayObjectSSC]},
     spriteNameChanged:  { components: [Sprite , DisplayObjectSSC], listen: { changed: [Sprite] }}
 }
 

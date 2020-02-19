@@ -9,11 +9,12 @@ class KinematicSystem extends System {
     }
 
     execute(delta, time) {
+
         this.queries.kinematics.results.forEach(entity => {
             let velocity = entity.getComponent(Velocity)
             let position = entity.getMutableComponent(Position)
-            position.x = position.x + velocity.x
-            position.y = position.y + velocity.y            
+            position.x += velocity.x
+            position.y += velocity.y
         });
 
     }
